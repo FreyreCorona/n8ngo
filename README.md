@@ -1,6 +1,6 @@
 ## n8ngo
 
-n8ngo is a set of Go libraries for interacting with n8n, designed to be simple, composable, and explicit.
+**n8ngo** is a set of Go libraries for interacting with **n8n**, designed to be simple, composable, and explicit.
 
 
 ## Philosophy
