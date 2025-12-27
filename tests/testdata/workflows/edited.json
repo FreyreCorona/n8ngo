@@ -1,0 +1,129 @@
+{
+  "name": "My workflow",
+  "nodes": [
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": [
+            {
+              "mode": "everyMinute"
+            }
+          ]
+        },
+        "filters": {}
+      },
+      "id": "7b66bf59-aab8-417d-ae1f-26116e58cb2c",
+      "name": "Incoming Email Monitor",
+      "type": "n8n-nodes-base.gmailTrigger",
+      "position": [
+        832,
+        128
+      ],
+      "notesInFlow": false,
+      "typeVersion": 1.2,
+      "notes": "This gmailTrigger node performs automated tasks as part of the workflow."
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "version": 2,
+            "leftValue": "",
+            "caseSensitive": true,
+            "typeValidation": "loose"
+          },
+          "combinator": "or",
+          "conditions": [
+            {
+              "id": "2496d01f-dbd5-4e23-84c3-f78decb87697",
+              "operator": {
+                "type": "string",
+                "operation": "contains"
+              },
+              "leftValue": "={{ $json.Subject }}",
+              "rightValue": "Urgent"
+            },
+            {
+              "id": "274e9e05-5c74-487e-851d-0ca62210cb99",
+              "operator": {
+                "name": "filter.operator.equals",
+                "type": "string",
+                "operation": "equals"
+              },
+              "leftValue": "={{ $json.Subject }}",
+              "rightValue": "Server Down"
+            }
+          ]
+        },
+        "looseTypeValidation": true,
+        "options": {
+          "ignoreCase": false
+        }
+      },
+      "id": "36edbf99-3067-4488-8109-e7a1952b81ea",
+      "name": "Email Validation Check",
+      "type": "n8n-nodes-base.if",
+      "position": [
+        832,
+        352
+      ],
+      "typeVersion": 2.2,
+      "notes": "This if node performs automated tasks as part of the workflow."
+    },
+    {
+      "parameters": {
+        "text": "=From : {{ $json.From }}\nSubject :{{ $json.Subject }}\nMessage : {{ $json.snippet }}\n",
+        "additionalFields": {
+          "appendAttribution": false
+        }
+      },
+      "id": "29204f3f-cefc-4867-9963-fc52b312884a",
+      "name": "Send Telegram Message",
+      "type": "n8n-nodes-base.telegram",
+      "position": [
+        832,
+        -96
+      ],
+      "webhookId": "c8f1d16f-b698-4af9-a795-9aaa277c2bf6",
+      "notesInFlow": false,
+      "typeVersion": 1.2,
+      "notes": "This telegram node performs automated tasks as part of the workflow."
+    },
+    {
+      "parameters": {},
+      "id": "7e6638ab-c830-471b-badd-14962596ffb0",
+      "name": "Error Handler",
+      "type": "n8n-nodes-base.stopAndError",
+      "typeVersion": 1,
+      "position": [
+        832,
+        576
+      ]
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -64,
+        -208
+      ],
+      "id": "fd0f42cb-06f2-4afb-8758-298a1e6c3ced",
+      "name": "Sticky Note"
+    }
+  ],
+  "pinData": {},
+  "connections": {},
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "availableInMCP": false
+  },
+  "versionId": "635108cc-87bd-4037-b1b0-c0d873c498ac",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "04fd9214791c7be24e1c709e2742136cca4b7be2577c7261f13fc44e0d019273"
+  },
+  "id": "Gq6ex4D1SbEVnd04",
+  "tags": []
+}
